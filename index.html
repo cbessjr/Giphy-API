@@ -1,63 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
     <title>GIPHY API</title>
-
+    <style type="text/css">
+        button,
+        div,
+        form,
+        input {
+          margin: 10px;
+        }
+    </style>
 </head>
-
 
 <body>
 
 <div class="container">
-    
-    <!--Form banner-->
     <h1>Favorite Birds</h1>
 
     <!-- Book button generation -->
     <div id="bird-view"></div>
 
-
     <form id="bird-form">
-
-        <!-- Submit Button -->
-        <label for="add-bird"> New Bird</label>
-        <input type="text">
+        <label for="bird-input"> New Bird</label>
+        <input type="text" id="bird-input"><br>
         
-        <p>
-        
-        <input type="submit" value="Add Bird" id="add-bird">
-
+        <!-- Button -->
+        <input id="add-bird" type="submit" value="Add Bird">
     </form>
-
-
-
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-//Array of books
+//Array of birds
 var birds = ["Eagle", "Sparrow", "Birch", "Flamingo", "Hawk"];
 
-function createButton() {
+//Functions
+function renderButtons() {
 
-    $("bird-view").empty();
+
+
+    $("#bird-view").empty();
+
 
     for (var i=0; i < birds.length; i++) {
 
          var birdButton = $("<button>");
-         birdButton.addClass("movie");
+         birdButton.addClass("bird");
          birdButton.attr("data-name", birds[i]);
-         birdButton.text(books[i]);
-         $("bird-view").append(birdButton);
+         birdButton.text(birds[i]);
+         $("#bird-view").append(birdButton);
 
     }
 }
 
 
+$("#add-bird").on("click", function(event) {
 
+    event.preventDefault();
+
+    var bird = $("#bird-input").val().trim();
+    birds.push(bird);
+
+    renderButtons();
+
+})
+
+renderButtons();
 
 </script>    
 
