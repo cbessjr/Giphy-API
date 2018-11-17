@@ -11,6 +11,12 @@
         input {
           margin: 10px;
         }
+
+        img {
+            width: 100px;
+
+
+        }
     </style>
 </head>
 
@@ -33,67 +39,59 @@
     <div id="images"></div>
 
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-//Array of birds
-var birds = ["Eagle", "Sparrow", "Birch", "Flamingo", "Hawk"];
-
-//Functions
-function renderButtons() {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
 
 
+    //Array of birds
+    var birds = ["Eagle", "Sparrow", "Birch", "Flamingo", "Hawk"];
 
-    $("#bird-view").empty();
+    //Functions
+    function renderButtons() {
+        for (var i = 0; i < birds.length; i++) {
 
-
-    for (var i=0; i < birds.length; i++) {
-
-         var birdButton = $("<button>");
-         birdButton.addClass("bird");
-         birdButton.attr("data-name", birds[i]);
-         birdButton.text(birds[i]);
-         $("#bird-view").append(birdButton);
-
+            var birdButton = $("<button>");
+            birdButton.addClass("bird");
+            birdButton.attr("data-name", birds[i]);
+            birdButton.text(birds[i]);
+            $("#bird-view").append(birdButton);
+        }
     }
-}
 
+    $("#add-bird").on("click", function (event) {
+        event.preventDefault();
 
-$("#add-bird").on("click", function(event) {
+        var bird = $("#bird-input").val().trim();
+        birds.push(bird);
 
-    event.preventDefault();
-
-    var bird = $("#bird-input").val().trim();
-    birds.push(bird);
+        var birdButton = $("<button>");
+        birdButton.addClass("bird");
+        birdButton.attr("data-name", bird);
+        birdButton.text(bird);
+        $("#bird-view").append(birdButton);
+    })
 
     renderButtons();
 
-})
+    $(document).on("click", ".bird", function (event) {
+        //event.preventDefault();
+        var birdCall = $(this).attr("data-name");
 
-renderButtons();
+        // console.log(birdCall);
 
-
-
-$(".bird").on("click", function(event){
-
-    $("#images").empty
-
-    var birdCall = $(".bird").val("data-name");
-
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + birdCall;
-    //5EJviGgbyuiu9hl4OuvCux4xlkGFetQL
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&q=" + birdCall;
         $.ajax({
-        url: queryURL,
-        method: "GET"
-        }).then(function(response) {
-        response.data.forEach(function(data) {
-            var imageUrl = data.images.original.url;
-            $('<img src="' + imageUrl + '" />').appendTo('#images')
-        })
-        // $('<img />').attr('src', imageUrl)
-    });
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            $("#images").empty();
 
-    
-})
+            response.data.forEach(function (data) {
+                var imageUrl = data.images.original.url;
+                $('<img src="' + imageUrl + '" />').appendTo('#images')
+            })
+        });
+    })
 
 </script>    
 
