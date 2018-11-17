@@ -72,17 +72,6 @@ $("#add-bird").on("click", function(event) {
 renderButtons();
 
 
-$("#add-bird").on("click", function(event) {
-
-    event.preventDefault();
-
-    var bird = $("#bird-input").val().trim();
-    birds.push(bird);
-
-    renderButtons();
-
-})
-
 
 $(".bird").on("click", function(event){
 
