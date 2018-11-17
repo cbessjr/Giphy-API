@@ -29,6 +29,9 @@
         <!-- Button -->
         <input id="add-bird" type="submit" value="Add Bird">
     </form>
+
+    <div id="images"></div>
+
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -67,6 +70,41 @@ $("#add-bird").on("click", function(event) {
 })
 
 renderButtons();
+
+
+$("#add-bird").on("click", function(event) {
+
+    event.preventDefault();
+
+    var bird = $("#bird-input").val().trim();
+    birds.push(bird);
+
+    renderButtons();
+
+})
+
+
+$(".bird").on("click", function(event){
+
+    $("#images").empty
+
+    var birdCall = $(".bird").val("data-name");
+
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + birdCall;
+    //5EJviGgbyuiu9hl4OuvCux4xlkGFetQL
+        $.ajax({
+        url: queryURL,
+        method: "GET"
+        }).then(function(response) {
+        response.data.forEach(function(data) {
+            var imageUrl = data.images.original.url;
+            $('<img src="' + imageUrl + '" />').appendTo('#images')
+        })
+        // $('<img />').attr('src', imageUrl)
+    });
+
+    
+})
 
 </script>    
 
